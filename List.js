@@ -3,7 +3,17 @@ const input = document.querySelector('#chores');
 const choreList = document.querySelector('#toDo-list');
 
 
-const List = []
+const list = JSON.parse(localStorage.getItem("chores")) || [];
+for (let i = 0; i < list.length; i++) {
+    let newChore = document.createElement('li');
+    newChore.innerText = list[i].task;
+    newChore.isCompleted = list[i].isCompleted ? true : false;
+    if (newChore.iscompleted) {
+        newChore.style.textDecoration = "line-through";
+    }
+    choreList.appendChild(newChore);
+    
+}
 
 
 form.addEventListener('submit', function (e) {
@@ -13,17 +23,31 @@ form.addEventListener('submit', function (e) {
     toDobutton.innerText = "DONE";
     console.log(choreList.length)
     newChore.innerText = input.value;
-    toDobutton.setAttribute('id', List.length)
+    newChore.isCompleted = false;
+    toDobutton.setAttribute('id', list.length)
     newChore.appendChild(toDobutton);
     input.value = '';
     choreList.appendChild(newChore);
-    List.push(List.length)
+    list.push(list.length)
+
+    savedChores.push({task : newChore.innerText, isCompleted : false});
+    localStorage.setItem("chores", JSON.stringify(list)); 
+
+});
+
     toDobutton.addEventListener('click', function(e){
-       e.target.parentElement.remove()
+       e.target.parentElement.remove();
+    
     });
 
-    newChore.addEventListener('click', function(e){
-        e.target.style.textDecoration = "line-through";
-    })
+    newChore.addEventListener('click', function(e) {
+    e.target.style.textDecoration = "line-through";
+    });  
+    
+    savedChores.push({task : newChore.innerText, isCompleted : false});
+    localStorage.setItem("chores", JSON.stringify(list)); 
+
+
+
 
 });
